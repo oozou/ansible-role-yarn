@@ -21,9 +21,13 @@
     state: absent
   when: 'yarn_clean_install == true and "{{ ansible_os_family }}" == "Debian" or "{{ ansible_os_family }}" == "RedHat"'
 
-- name: "Yarn | Include OS-specific tasks"
-  include: "yarn-{{ ansible_os_family }}.yml"
-  when: '"{{ ansible_os_family }}" == "Debian" or "{{ ansible_os_family }}" == "RedHat"'
+- name: "Yarn | Include OS-specific tasks [Debian]"
+  include: "yarn-Debian.yml"
+  when: ansible_os_family == "Debian"
+
+- name: "Yarn | Include OS-specific tasks [RedHat]"
+  include: "yarn-RedHat.yml"
+  when: ansible_os_family == "RedHat"
 
 - name: "Yarn | Install"
   become: yes
